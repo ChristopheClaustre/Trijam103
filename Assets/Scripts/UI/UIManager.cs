@@ -11,21 +11,15 @@ public class UIManager : MonoBehaviour
     public Text birdText;
     public Text message;
     public Text scoreText;
+    public GameObject endScreen;
 
     public GameState gameState;
-
-    public UnityEvent gameOver;
 
     // Start is called before the first frame update
     void Start()
     {
-        timerText.text = "15";
+        timerText.text = "" + gameState.FreezeDuration;
         birdText.text = "0";
-
-        gameState.Init();
-
-        StartCoroutine(ManageBird());
-        StartCoroutine(ManageTimer());
     }
 
     // Update is called once per frame
@@ -33,24 +27,19 @@ public class UIManager : MonoBehaviour
     {
     }
 
+    public void StartUIManagers()
+    {
+        StartCoroutine(ManageBird());
+        StartCoroutine(ManageTimer());
+    }
+
     IEnumerator ManageTimer()
     {
-        yield return new WaitUntil(() => Input.GetKey(KeyCode.Space));
-
-        message.gameObject.SetActive(false);
-
-        yield return new WaitForSeconds(2.8f);
-
-        for (int i = 15; i > 0; i--)
+        for (int i = gameState.FreezeDuration; i > 0; i--)
         {
-            yield return new WaitForSeconds(1);
             timerText.text = i + "";
+            yield return new WaitForSeconds(1);
         }
-
-        timerText.text = "0";
-        yield return new WaitForSeconds(0.5f);
-        scoreText.text = string.Format(scoreText.text, gameState.BirdShot);
-        gameOver.Invoke();
     }
 
     IEnumerator ManageBird()
@@ -64,6 +53,20 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void StartManageEnd()
+    {
+        StartCoroutine(ManageEnd());
+    }
+
+    IEnumerator ManageEnd()
+    {
+        timerText.text = "0";
+        yield return new WaitForSeconds(0.5f);
+        scoreText.text = string.Format(scoreText.text, gameState.BirdShot);
+        gameObject.GetComponent<Canvas>().enabled = false;
+        endScreen.SetActive(true);
+    }
+    
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

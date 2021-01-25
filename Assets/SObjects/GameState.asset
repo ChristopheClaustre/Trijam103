@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ae4cc88d3bf7e4391ed3d618a27c8c, type: 3}
   m_Name: GameState
   m_EditorClassIdentifier: 
+  freezeDuration: 5

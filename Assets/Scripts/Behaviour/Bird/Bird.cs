@@ -24,7 +24,6 @@ public class Bird : MonoBehaviour
             Destroy(gameObject);
 
         StartCoroutine(DelayAnimator());
-        StartCoroutine(ManageStopTime());
     }
 
     IEnumerator DelayAnimator()
@@ -34,13 +33,14 @@ public class Bird : MonoBehaviour
         anim.enabled = !timeStopped;
     }
 
-    IEnumerator ManageStopTime()
+    public void PauseTime()
     {
-        yield return new WaitUntil(() => Input.GetKey(KeyCode.Space));
-        yield return new WaitForSeconds(2.8f);
         timeStopped = true;
         anim.enabled = false;
-        yield return new WaitForSeconds(15.5f);
+    }
+
+    public void UnpauseTime()
+    {
         anim.enabled = !dead;
     }
 

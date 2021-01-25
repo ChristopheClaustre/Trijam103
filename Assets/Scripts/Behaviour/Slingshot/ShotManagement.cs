@@ -23,39 +23,37 @@ public class ShotManagement : MonoBehaviour
     {
         initialSlotLocalPos = slot.transform.localPosition;
         stringScripts = GetComponentsInChildren<CordGeneration>().ToList();
-        StartCoroutine(ManageShot());
+        StartCoroutine(DelayFirstCordGeneration());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    public void StartManageShot()
+    {
+        StartCoroutine(ManageShot());
+    }
+
+    private IEnumerator DelayFirstCordGeneration()
+    {
+        yield return new WaitForEndOfFrame();
+        GenerateAllCord();
     }
 
     private IEnumerator ManageShot()
     {
-        yield return new WaitForEndOfFrame();
-        slot.transform.localPosition = initialSlotLocalPos;
-        foreach (var c in stringScripts)
-            c.GenerateCord();
-
-        yield return new WaitUntil(() => Input.GetKey(KeyCode.Space));
-        yield return new WaitForSeconds(0.5f);
-
-        while (isActiveAndEnabled)
+        while (true)
         {
             yield return new WaitUntil(() => Input.GetMouseButton(0));
 
-            slot.transform.localPosition = initialSlotLocalPos;
-            foreach (var c in stringScripts)
-                c.GenerateCord();
+            GenerateAllCord();
             BulletShot shotScript = Instantiate(bulletPrefabs[Random.Range(0, bulletPrefabs.Count)], transform).GetComponent<BulletShot>();
             shotScript.slot = slot;
 
             yield return new WaitForEndOfFrame();
-
-            if (!isActiveAndEnabled)
-                yield return null;
 
             chargingSound.Play();
             shotScript.Charge();
@@ -75,5 +73,12 @@ public class ShotManagement : MonoBehaviour
             shotSound.Play();
             shotScript.Shot();
         }
+    }
+
+    public void GenerateAllCord()
+    {
+        slot.transform.localPosition = initialSlotLocalPos;
+        foreach (var c in stringScripts)
+            c.GenerateCord();
     }
 }
