@@ -48,7 +48,7 @@ public class BulletShot : MonoBehaviour
         slotFixedJoint = null;
         rb.isKinematic = false;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        float angle = 20;
+        float angle = 10;
         rb.AddRelativeForce(new Vector3(0, strenght * Mathf.Sin(angle * Mathf.Deg2Rad), strenght * Mathf.Cos(angle * Mathf.Deg2Rad)), ForceMode.Impulse);
         transform.parent = null;
         shotDone = true;
