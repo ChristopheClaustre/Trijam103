@@ -1913,6 +1913,8 @@ GameObject:
   - component: {fileID: 715013239}
   - component: {fileID: 715013241}
   - component: {fileID: 715013240}
+  - component: {fileID: 715013242}
+  - component: {fileID: 715013243}
   m_Layer: 0
   m_Name: _Dora
   m_TagString: Untagged
@@ -1993,12 +1995,114 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a89ff299f2e927b4e9afcfcc4786680f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shaderTimeProperty: _FreezeTime
-  shaderReversedProperty: _ReversedFreeze
   launchZawarudoEvent: {fileID: 11400000, guid: 5a5afc1baad8995408145b2f07895f41,
     type: 2}
   endFreezeEvent: {fileID: 11400000, guid: 7b5854a4566f41948a0d81cd5526092c, type: 2}
   gameState: {fileID: 11400000, guid: cfabcb3d751666b44b77d6218d299657, type: 2}
+  ppShader: {fileID: 963194230}
+  distanceMin: 0
+  distanceMax: 0
+  distanceSafe: 0.012
+--- !u!95 &715013242
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715013238}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a73f0be8ff3fa454099c13c95b74c77a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &715013243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715013238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa39e69ee488484439cd909f5f2a3254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventAndResponses:
+  - name: Launch Zawarudo event
+    gameEvent: {fileID: 11400000, guid: 5a5afc1baad8995408145b2f07895f41, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 715013242}
+          m_MethodName: SetTrigger
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Freeze
+            m_BoolArgument: 0
+          m_CallState: 2
+    responseForSentString:
+      m_PersistentCalls:
+        m_Calls: []
+    responseForSentInt:
+      m_PersistentCalls:
+        m_Calls: []
+    responseForSentFloat:
+      m_PersistentCalls:
+        m_Calls: []
+    responseForSentBool:
+      m_PersistentCalls:
+        m_Calls: []
+    responseForSentMonoBehaviour:
+      m_PersistentCalls:
+        m_Calls: []
+    responseForSentScriptableObject:
+      m_PersistentCalls:
+        m_Calls: []
+  - name: End Freeze event
+    gameEvent: {fileID: 11400000, guid: 7b5854a4566f41948a0d81cd5526092c, type: 2}
+    response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 715013242}
+          m_MethodName: SetTrigger
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Unfreeze
+            m_BoolArgument: 0
+          m_CallState: 2
+    responseForSentString:
+      m_PersistentCalls:
+        m_Calls: []
+    responseForSentInt:
+      m_PersistentCalls:
+        m_Calls: []
+    responseForSentFloat:
+      m_PersistentCalls:
+        m_Calls: []
+    responseForSentBool:
+      m_PersistentCalls:
+        m_Calls: []
+    responseForSentMonoBehaviour:
+      m_PersistentCalls:
+        m_Calls: []
+    responseForSentScriptableObject:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1001 &750283571
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2836,6 +2940,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2875,7 +2980,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 100
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -2924,6 +3029,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   absoluteAngleLimits: {x: 90, y: 80}
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0150ad5cc82850f49b688bd9d160be68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shaderName: PP/Zawarudo
+  depthTextureMode: 1
 --- !u!1001 &1078351665
 PrefabInstance:
   m_ObjectHideFlags: 0
